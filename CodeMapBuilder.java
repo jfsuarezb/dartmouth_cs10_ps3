@@ -46,7 +46,7 @@ public class CodeMapBuilder {
 		if (tree.hasRight()) addHash(codeMapParameter, tree.getRight(), path + "1");
 	}
 
-	public String getCode(String character) {
-		return this.codeMap.get(character);
+	public String getCode(String theChar) {
+		return this.codeMap.get(theChar);
 	}
 }
