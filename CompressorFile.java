@@ -12,20 +12,15 @@ public class CompressorFile.java {
 	public compress() {
 		try {
 			this.codeMap = new CodeMapBuilder(this.fileName);
-			String line;
-			BufferedReader input = new BufferedReader(new FileReader(this.fileName));	
-			compressedFile = new File("compressed_" + this.fileName);
-			compressedFile.delete()
-			compressedFile.createNewFile();
-			FileWriter writer = new FileWriter("compressed_" + this.fileName);
-			while ((line = input.readLine()) != null) {
-				for (int i = 0; i < line.length(); i++) {
-					writer.write(this.codeMap.get(line.charAt(i)));
-				}
+			BufferedReader input = new BufferedReader(new FileReader(this.fileName));
+			BufferedWriter output = new BufferedWriter(new FileWriter("compressed_" + this.fileName));
+			int data;
+			while((data = input.read()) != -1) {
+				char charData = (char)data;
+				output.write(this.codeMap.get(String.valueOf(charData)));
 			}
-			writer.close() 
-			File previousFile = new File(this.fileName);
-			previousFile.delete();
+			input.close();
+			output.close();
 		} catch(IOException e) {
 			return;
 		}
@@ -34,8 +29,22 @@ public class CompressorFile.java {
 
 	public deCompress() {
 		try {
-			
-		} catch(IOException e) {
+			BufferedReader input = new BufferedReader(new FileReader("compressed_" + this.fileName));
+			File oldFile  = new File(this.fileName);
+			oldFile.delete();
+			BufferedWriter output = new BufferedWriter(new FileWriter(this.fileName));
+			String currentKey;
+			int newDigit;
+			while((newDigit = input.read()) != -1) {
+				currentKey = currentKey + String.valueOf((char)newDigit));
+				if (codeMap.inverseGetCode(currentKey) != "") {
+					output.write(codeMap.inverseGetCode(currentKey));
+					currentKey = "";
+				}
+			}
+			input.close();
+			output.close() 
+	} catch(IOException e) {
 			return;
 		}
 	}

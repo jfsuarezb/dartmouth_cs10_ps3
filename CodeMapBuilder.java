@@ -4,6 +4,7 @@ public class CodeMapBuilder {
 	private FreqMap freqMap;
 	private BinaryTree<KeyValueHolder> codeTree;
 	private HashMap<String, String> codeMap;	
+	private HashMap<String, String> reverseCodeMap;
 
 	public CodeMapBuilder(String fileName) {
 		this.freqMap = new FreqMap();
@@ -34,6 +35,11 @@ public class CodeMapBuilder {
 
 		this.codeMap = newCodeMap;
 					
+		this.reverseCodeMap = new HashMap<String, String>();
+		
+		for (Map.Entry<String, String> entry: this.codeMap.entrySet()) {
+			this.reverseCodeMap.put(entry.getValue(), entry.getKey());
+		}
 	}		
 
 	private void addHash(HashMap<String, String> codeMapParameter, BinaryTree<KeyValueHolder> tree, String path) {
@@ -48,5 +54,10 @@ public class CodeMapBuilder {
 
 	public String getCode(String theChar) {
 		return this.codeMap.get(theChar);
+	}
+	
+	public String inverseGetCode(String theCode) {
+		if (this.reverseCodeMap.containsKey(theCode)) return this.reverseCodeMap.get(theCode);
+		return "";
 	}
 }
