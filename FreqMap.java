@@ -1,6 +1,12 @@
 import java.util.*;
 import java.io.*;
 
+/**
+* This class generates the frequency map from the characters in a file
+* It basically goes through all of the characters in the file and keeps a counter for each character
+* It updates that counter by 1 whenever it encounters that character
+*/
+
 public class FreqMap {
 	
 	private Map<String, Integer> freqMap;

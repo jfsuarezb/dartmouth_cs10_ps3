@@ -1,6 +1,11 @@
 import java.util.*;
 import java.io.*;
 
+/**
+* This class uses the map with optimized codes in the CodeMapBuilder class. It compresses and decompresses files
+* It compresses files by reading each character and looking up the optimized code and replacing the character with the optimized code
+* It decompresses in a symetrical process where it reads each optimized code and reverse searches for the corresponding character
+*/
 public class CompressorFile {
 	private String fileName;
 	private CodeMapBuilder codeMap;
@@ -8,7 +13,9 @@ public class CompressorFile {
 	public CompressorFile(String fileName) {
 		this.fileName = fileName;
 	}
-	
+
+
+	// This method compresses the file. The way it funcitons is specified in the code above	
 	public void compress() {
 		try {
 			try {
@@ -57,6 +64,8 @@ public class CompressorFile {
 		}
 	}
 
+
+	// This method decompresses the file. The way it functions is specified in the code above
 	public void deCompress() {
 		try {
 			BufferedBitReader reader = new BufferedBitReader("compressed_" + fileName);

@@ -1,3 +1,5 @@
+// This class is the KeyValueHolder class
+// It's a type dessigned to keep the key and the frequency of the key in one single object
 public class KeyValueHolder {
 	
 	private String key;
