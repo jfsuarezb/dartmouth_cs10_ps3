@@ -30,19 +30,30 @@ public class FreqMap {
 		this.freqMap = new HashMap<String, Integer>();
 
 		try {
-			BufferedReader input = new BufferedReader(new FileReader(fileName));
-			String line;
-			while((line = input.readLine()) != null) {
-				for (int i = 0; i < line.length(); i++) {
-					if (!this.freqMap.containsKey(String.valueOf(line.charAt(i)))) {
-						this.freqMap.put(String.valueOf(line.charAt(i)), 1);
-						continue;
-					}
-					this.freqMap.put(String.valueOf(line.charAt(i)), this.freqMap.get(String.valueOf(line.charAt(i))) + 1);
+			String fileInChar = "";
+			String currentByteString = "";
+			BufferedBitReader reader = new BufferedBitReader(fileName);
+			while (reader.hasNext()) {
+				if (reader.readBit()) {
+					currentByteString = currentByteString + "1";
+				} else {
+					currentByteString = currentByteString + "0";
+				}
+
+				if (currentByteString.length() == 8) {
+					long currentByteLong = Long.parseLong(currentByteString, 2);
+					fileInChar = fileInChar + String.valueOf((char)currentByteLong);
+					currentByteString = "";
 				}
 			}
-
-			System.out.println(this.freqMap);
+			for (int i = 0; i < fileInChar.length(); i++) {
+				if(!this.freqMap.containsKey(String.valueOf(fileInChar.charAt(i)))) {
+					this.freqMap.put(String.valueOf(fileInChar.charAt(i)), 1);
+					continue;
+				}
+				this.freqMap.put(String.valueOf(fileInChar.charAt(i)), this.freqMap.get(String.valueOf(fileInChar.charAt(i))) + 1);
+			}
+			reader.close();	
 		} catch(IOException e) {
 			return;
 		}
