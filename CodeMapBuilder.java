@@ -5,14 +5,17 @@ public class CodeMapBuilder {
 	private HashMap<String, String> codeMap;	
 	private HashMap<String, String> reverseCodeMap;
 
-	public CodeMapBuilder(String fileName) {
+	public CodeMapBuilder(String fileName) throws Exception {
 		this.freqMap = new FreqMap();
 		this.freqMap.decodeFile(fileName);
 		this.buildCodeTree();
 	}
 
-	private void buildCodeTree() {
+	private void buildCodeTree() throws Exception {
 		ArrayList<KeyValueHolder> keyArrays = this.freqMap.getEntries();
+		if (keyArrays.size() == 1) {
+			throw new Exception("Only one character in file. No room for optimization");
+		}
 		PriorityQueue<BinaryTree<KeyValueHolder>> pqueue = new PriorityQueue<BinaryTree<KeyValueHolder>>(keyArrays.size(), new BinaryTreeKeyValueHolderComparator());
 
 		for (int i = 0; i < keyArrays.size(); i++) {

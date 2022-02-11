@@ -11,7 +11,12 @@ public class CompressorFile {
 	
 	public void compress() {
 		try {
-			this.codeMap = new CodeMapBuilder(this.fileName);
+			try {
+				this.codeMap = new CodeMapBuilder(this.fileName);
+			} catch(Exception e) {
+				System.out.println("There is only one character in file. No room for optimization");
+				return;
+			}
 			String fileInChar = "";
 			String currentByteString = "";
 			BufferedBitReader reader = new BufferedBitReader(fileName);
@@ -29,6 +34,10 @@ public class CompressorFile {
 				}
 			}
 			reader.close();
+			if (fileInChar.length() <= 1) {
+				System.out.println("No optimization possible. File is too short");
+				return;
+			}
 			File newFile = new File("compressed_" + fileName);
 			newFile.createNewFile();
 			BufferedBitWriter writer = new BufferedBitWriter("compressed_" + fileName);
