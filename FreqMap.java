@@ -20,7 +20,7 @@ public class FreqMap {
 		ArrayList<KeyValueHolder> arrayToReturn = new ArrayList<KeyValueHolder>();
 
 		for (String key : this.freqMap.keySet()) {
-			arrayToReturn.add(new KeyValueHolder(key, this.freqMap.get(key));
+			arrayToReturn.add(new KeyValueHolder(key, this.freqMap.get(key)));
 		}
 
 		return arrayToReturn;
@@ -28,17 +28,23 @@ public class FreqMap {
 
 	public void decodeFile(String fileName) {
 		this.freqMap = new HashMap<String, Integer>();
-		
-		BufferedReader input = new BufferedReader(new FileReader(fileName));
-		String line;
-		while((line = input.readLine()) != null) {
-			for (int i = 0; i < line.length(); i++) {
-				if (!this.freqMap.containsKey(line.charAt(i))) {
-					this.freqMap.put(line.charAt(i), 0);
-					continue;
+
+		try {
+			BufferedReader input = new BufferedReader(new FileReader(fileName));
+			String line;
+			while((line = input.readLine()) != null) {
+				for (int i = 0; i < line.length(); i++) {
+					if (!this.freqMap.containsKey(String.valueOf(line.charAt(i)))) {
+						this.freqMap.put(String.valueOf(line.charAt(i)), 1);
+						continue;
+					}
+					this.freqMap.put(String.valueOf(line.charAt(i)), this.freqMap.get(String.valueOf(line.charAt(i))) + 1);
 				}
-				this.freqMap.put(line.charAt(i), this.freqMap.get(line.charAt(i)) + 1);
 			}
+
+			System.out.println(this.freqMap);
+		} catch(IOException e) {
+			return;
 		}
 	}
 }

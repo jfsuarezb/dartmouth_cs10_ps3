@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class CodeMapBuilder {
 	private FreqMap freqMap;
 	private BinaryTree<KeyValueHolder> codeTree;
@@ -23,18 +22,18 @@ public class CodeMapBuilder {
 		while(pqueue.size() > 1) {
 			BinaryTree<KeyValueHolder> t1 = pqueue.poll();
 			BinaryTree<KeyValueHolder> t2 = pqueue.poll();
-			BinaryTree<KeyValueHolder> newRoot = new BinaryTree<KeyValueHolder>(new KeyValueHolder("null", t1.getValue() + t2.getValue()), t1, t2);
+			BinaryTree<KeyValueHolder> newRoot = new BinaryTree<KeyValueHolder>(new KeyValueHolder("null", t1.getData().getValue() + t2.getData().getValue()), t1, t2);
 			pqueue.add(newRoot);
 		}			
 
 		this.codeTree = pqueue.poll();
-		
+
 		HashMap<String, String> newCodeMap = new HashMap<String, String>();
 		
 		addHash(newCodeMap, this.codeTree, "");
 
 		this.codeMap = newCodeMap;
-					
+
 		this.reverseCodeMap = new HashMap<String, String>();
 		
 		for (Map.Entry<String, String> entry: this.codeMap.entrySet()) {
@@ -44,7 +43,7 @@ public class CodeMapBuilder {
 
 	private void addHash(HashMap<String, String> codeMapParameter, BinaryTree<KeyValueHolder> tree, String path) {
 		if (tree.isLeaf()) {
-			codeMapParameter.add(tree.getData().getKey(), path);
+			codeMapParameter.put(tree.getData().getKey(), path);
 			return;
 		}
 
